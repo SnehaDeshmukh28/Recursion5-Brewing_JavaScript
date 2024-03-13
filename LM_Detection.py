@@ -7,6 +7,7 @@ import pandas as pd
 from geopy.geocoders import Nominatim
 import folium
 from streamlit_folium import folium_static
+import webbrowser
 
 model_url = 'https://tfhub.dev/google/on_device_vision/classifier/landmarks_classifier_asia_V1/1'
 labels = 'landmarks_classifier_asia_V1_label_map.csv'
@@ -73,6 +74,12 @@ def home():
 
             st.subheader('✅ *' + prediction + ' on the Map*' + '🗺')
             folium_static(m)
+
+            # Button to open Google Maps with directions
+            if st.button("Get Directions"):
+                url = f"https://www.google.com/maps/dir/?api=1&destination={latitude},{longitude}"
+                webbrowser.open_new_tab(url)
+
         except Exception as e:
             st.warning("No address found!!")
 
