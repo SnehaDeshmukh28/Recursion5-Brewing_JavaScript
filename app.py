@@ -62,6 +62,9 @@ def get_map(location):
 @app.route('/')
 def home():
     return render_template('home.html')
+@app.route('/img')
+def img():
+    return render_template('upload.html')
 
 @app.route('/about')
 def about():
