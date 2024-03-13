@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Plan Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .form-container {
+      max-width: 400px;
+      margin: 50px auto;
+    }
+    .form-container input,
+    .form-container button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+    }
+    .form-container button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    .response-container {
+      margin-top: 20px;
+    }
+    .loader {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #007bff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+      display: none; /* Initially hidden */
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <form id="travelForm">
+      <input type="text" id="locationName" placeholder="Place Name" required>
+      <input type="number" id="days" placeholder="Number of Days" required>
+      <input type="number" id="budget" placeholder="Budget" required>
+      <input type="number" id="people" placeholder="Number of People" required>
+      <button type="submit" id="generateBtn">Generate Plan</button>
+    </form>
+  </div>
+  <div class="loader" id="loader"></div>
+  <div class="response-container">
+    <p id="response"></p>
+  </div>
+
+  <script>
+    const loader = document.getElementById("loader");
+
+    document.getElementById("travelForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      showLoader();
+      generateText(document.getElementById("locationName").value);
+    });
+
+    function generateText(locationName) {
+      const budget = document.getElementById("budget").value;
+      const people = document.getElementById("people").value;
+      const days = document.getElementById("days").value;
+
+      fetch(
+        `http://127.0.0.1:5000/gemini?location_name=${locationName}&budget=${budget}&people=${people}&days=${days}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          hideLoader();
+          document.getElementById("response").innerText = parseBoldText(
+            data.generated_text
+          );
+        })
+        .catch((error) => {
+          hideLoader();
+          console.error("Error:", error);
+          document.getElementById("response").innerHTML =
+            "Error occurred while generating text.";
+        });
+    }
+
+    function parseBoldText(text) {
+      // Example function to parse text and add bold formatting
+      return `<strong>${text}</strong>`;
+    }
+
+    function showLoader() {
+      loader.style.display = "block";
+    }
+
+    function hideLoader() {
+      loader.style.display = "none";
+    }
+  </script>
+</body>
+</html>
