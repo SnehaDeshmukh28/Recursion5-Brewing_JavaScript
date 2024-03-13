@@ -34,9 +34,9 @@ def get_map(loc):
     return location.address,location.latitude, location.longitude
 
 def run():
-    st.title("Landmark Recognition")
-    img = PIL.Image.open('logo.png')
-    img = img.resize((256,256))
+    st.title("Landmark Recognition and Travel Guide")
+    img = PIL.Image.open('logo.jpg')
+    img = img.resize((256, 256))
     st.image(img)
     img_file = st.file_uploader("Choose your Image", type=['png', 'jpg'])
     if img_file is not None:
@@ -45,17 +45,30 @@ def run():
             f.write(img_file.getbuffer())
         prediction,image = image_processing(save_image_path)
         st.image(image)
-        st.header("📍 **Predicted Landmark is: " + prediction + '**')
+        st.header("📍 *Predicted Landmark is: " + prediction + '*')
+
         try:
             address, latitude, longitude = get_map(prediction)
-            st.success('Address: '+address )
-            loc_dict = {'Latitude':latitude,'Longitude':longitude}
-            st.subheader('✅ **Latitude & Longitude of '+prediction+'**')
+            st.success('Address: ' + address)
+            loc_dict = {'Latitude': latitude, 'Longitude': longitude}
+            st.subheader('✅ *Latitude & Longitude of ' + prediction + '*')
             st.json(loc_dict)
-            data = [[latitude,longitude]]
-            df = pd.DataFrame(data, columns=['lat', 'lon'])
-            st.subheader('✅ **'+prediction +' on the Map**'+'🗺️')
-            st.map(df)
+
+            # Create a map centered around the predicted location
+            m = folium.Map(location=[latitude, longitude], zoom_start=15)
+            folium.Marker([latitude, longitude], popup=prediction).add_to(m)
+            folium.CircleMarker(
+                location=[latitude, longitude],
+                radius=50,
+                popup=prediction,
+                color='blue',
+                fill=True,
+                fill_color='blue'
+            ).add_to(m)
+
+            st.subheader('✅ *' + prediction + ' on the Map*' + '🗺')
+            folium_static(m)
         except Exception as e:
             st.warning("No address found!!")
+
 run()
