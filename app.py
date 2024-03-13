@@ -1,5 +1,3 @@
-import warnings
-warnings.filterwarnings("ignore", category=DeprecationWarning)
 from flask import Flask, render_template, request, redirect, url_for
 import os
 import PIL
@@ -58,6 +56,22 @@ def predict():
             try:
                 address, latitude, longitude = get_map(prediction)
 
+                # Create Folium map
+                m = folium.Map(location=[latitude, longitude], zoom_start=15)
+                folium.Marker([latitude, longitude], popup=prediction).add_to(m)
+                folium.CircleMarker(
+                    location=[latitude, longitude],
+                    radius=50,
+                    popup=prediction,
+                    color='blue',
+                    fill=True,
+                    fill_color='blue'
+                ).add_to(m)
+
+                # Save map to HTML
+                map_path = './static/map.html'
+                m.save(map_path)
+
                 return render_template('result.html', 
                                        prediction=prediction, 
                                        image_path=url_for('static', filename=img_file.filename), 
@@ -66,12 +80,6 @@ def predict():
                                        longitude=longitude)
             except Exception as e:
                 return render_template('error.html')
-
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if request.method == 'POST':
-        # Here you can handle the file upload process
-        return redirect(url_for('predict'))
 
 if __name__ == '__main__':
     app.run(debug=True)
