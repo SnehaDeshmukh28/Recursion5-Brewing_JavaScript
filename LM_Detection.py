@@ -46,6 +46,7 @@ def run():
         prediction,image = image_processing(save_image_path)
         st.image(image)
         st.header("📍 *Predicted Landmark is: " + prediction + '*')
+        
 
         try:
             address, latitude, longitude = get_map(prediction)
@@ -70,5 +71,7 @@ def run():
             folium_static(m)
         except Exception as e:
             st.warning("No address found!!")
+            st.markdown("<h1 style='text-align: center; color: black;'>make a plan!</h1>", unsafe_allow_html=True)
+
 
 run()
