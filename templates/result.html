@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+</head>
+<body>
+    <h1>Result</h1>
+    <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image">
+    <h2>Predicted Landmark: {{ prediction }}</h2>
+    <h3>Address: {{ address }}</h3>
+    <h3>Latitude: {{ latitude }}</h3>
+    <h3>Longitude: {{ longitude }}</h3>
+</body>
+</html>
