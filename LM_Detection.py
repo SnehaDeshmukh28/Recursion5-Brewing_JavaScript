@@ -32,7 +32,13 @@ def get_map(location):
     location = geolocator.geocode(location)
     return location.address, location.latitude, location.longitude
 
-def run():
+def sidebar():
+    st.sidebar.title("Travel Planner")
+    st.sidebar.subheader("Navigation")
+    page = st.sidebar.radio("Go to", ["Home", "About"])
+    return page
+
+def home():
     st.title("Landmark Recognition and Travel Guide")
     img = PIL.Image.open('logo.jpg')
     img = img.resize((256, 256))
@@ -54,7 +60,6 @@ def run():
             st.subheader('✅ *Latitude & Longitude of ' + prediction + '*')
             st.json(loc_dict)
 
-            # Create a map centered around the predicted location
             m = folium.Map(location=[latitude, longitude], zoom_start=15)
             folium.Marker([latitude, longitude], popup=prediction).add_to(m)
             folium.CircleMarker(
@@ -71,4 +76,17 @@ def run():
         except Exception as e:
             st.warning("No address found!!")
 
-run()
+def about():
+    st.title("About Travel Planner")
+    st.write("This is a simple Travel Planner application built with Streamlit.")
+    st.write("Upload an image, and the app will recognize the landmark and provide information about it.")
+
+def main():
+    page = sidebar()
+    if page == "Home":
+        home()
+    elif page == "About":
+        about()
+
+if __name__ == "__main__":
+    main()
