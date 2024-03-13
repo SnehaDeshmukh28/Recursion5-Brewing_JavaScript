@@ -7,48 +7,228 @@
     <title>Result</title>
     <!-- Link to Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Include Font Awesome icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Include Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <!-- Make sure to set a height for the map container in CSS -->
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
         #map {
             height: 400px;
+            margin-top: 20px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Responsive button styles */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            background-color: #007bff;
+            /* Default blue color */
+            color: #fff;
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+            /* Darker blue on hover */
+        }
+
+        /* Form input styles */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .input-group button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .input-group button:hover {
+            background-color: #0056b3;
+        }
+
+        .size2rem {
+            font-size: 2rem;
+        }
+
+        .size1-5rem {
+            font-size: 1.5rem;
         }
     </style>
 </head>
 
 <body class="bg-gray-100">
-    <div class="container mx-auto py-8">
-        <h1 class="text-2xl font-semibold mb-4">Predicted Landmark: <span id="prediction" class="font-bold">{{ prediction }}</span></h1>
-        <div class="mb-4">
-            <img src="{{ url_for('static', filename=image_path) }}" alt="Predicted Landmark" class="max-w-full h-auto">
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-            <div class="bg-white rounded-lg shadow-md p-4">
-                <h2 class="text-lg font-semibold mb-2">Address</h2>
-                <p id="address" class="font-semibold">{{ address }}</p>
+    <div class="container py-8">
+        <h1 style="font-size: 4rem; margin-top: 1rem;
+        margin-bottom: 3rem;" class="text-2xl font-semibold mb-4">Predicted Landmark: <span id="prediction"
+                class="font-bold">{{ prediction }}</span></h1>
+        <div class="mb-4 grid grid-cols-3 sm:grid-cols-3 gap-4">
+            <div class="bg-white rounded-lg shadow-md p-4 items-center">
+                <div style="align-items: center;" class="flex">
+                    <i class="fas fa-2x fa-map-marker-alt text-blue-500 mr-2"></i>
+                    <h2 class="size2rem font-semibold mb-2">Address</h2>
+                </div>
+                <div>
+                    <p id="address1" class="font-semibold">{{ address }}</p>
+                </div>
             </div>
-            <div class="bg-white rounded-lg shadow-md p-4">
-                <h2 class="text-lg font-semibold mb-2">Latitude</h2>
-                <p id="latitude" class="font-semibold">{{ latitude }}</p>
+            <div class="bg-white rounded-lg shadow-md p-4 items-center">
+                <div style="align-items: center;" class="flex">
+                    <i class="fas fa-2x fa-globe-americas text-blue-500 mr-2"></i>
+                    <h2 class="size2rem font-semibold mb-2">Latitude</h2>
+                </div>
+                <div>
+                    <p id="latitude1" class="font-semibold">{{ latitude }}</p>
+                </div>
             </div>
-            <div class="bg-white rounded-lg shadow-md p-4">
-                <h2 class="text-lg font-semibold mb-2">Longitude</h2>
-                <p id="longitude" class="font-semibold">{{ longitude }}</p>
+            <div class="bg-white rounded-lg shadow-md p-4 items-center">
+                <div style="align-items: center;" class="flex">
+                    <i class="fas fa-2x fa-globe text-blue-500 mr-2"></i>
+                    <h2 class="size2rem font-semibold mb-2">Longitude</h2>
+                </div>
+                <div>
+                    <p id="longitude1" class="font-semibold">{{ longitude }}</p>
+                </div>
             </div>
         </div>
-        <div class="mb-4">
-            <a href="{{ url_for('home') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back to Home</a>
-        </div>
-
-        <!-- Button to get directions -->
-        <button onclick="getDirections('{{ latitude }}', '{{ longitude }}')" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Get Directions</button>
-
-        <!-- Button to read content -->
-        <button onclick="speakContent()" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded ml-2">Read Content</button>
 
         <!-- Map container -->
         <div id="map" class="mt-8"></div>
+
+        <section
+            style="--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow); background-color: rgba(255, 255, 255, var(--tw-bg-opacity)); margin-top: 2rem; padding: 2rem 5rem;"
+            id="weatherInfo" class="rounded-lg grid grid-cols-1 sm:grid-cols-1 gap-4">
+            <div>
+                <h3 id="description" style="margin: 0; font-size: 2rem;">Sunny</h3>
+            </div>
+            <div style="align-items: center; justify-content: space-between;" class="flex">
+                <div style="display: flex;">
+                    <h3 id="temperature" style="font-size: 7rem;
+                    font-weight: 700;">25°C</h3>
+
+                    <hr style="width: 1px;
+                    background: #00000036;
+                    height: 50%;
+                    margin: 0 5rem;">
+
+                    <div style="    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    font-size: 2rem;
+                    line-height: 1.5;">
+                        <h4><span id="day">Monday</span>, 
+                            <span id="dateNo">4</span>
+                            <span id="month">september  </span>
+                        </h4>
+                        <h4 id="location">{{prediction}}</h4>
+                    </div>
+                </div>
+                <div class="faicon">
+                    <i id="weatherIcon" style="font-size: 13rem;" class="fas fa-2x  text-blue-500 mr-2"></i>
+                </div>
+            </div>
+        </section>
+
+        <div style="margin-top: 1rem;">
+            <button  class="size1-5rem text-white font-bold py-2 rounded"><a style="--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow); margin-right: 0.5rem;"
+                    href="{{ url_for('home') }}"
+                    class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back to
+                    Home</a></button>
+
+            <!-- Button to get directions -->
+            <button style="--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);" onclick="getDirections('{{ latitude }}', '{{ longitude }}')"
+                class="size1-5rem bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Get
+                Directions</button>
+
+            <!-- Button to read content -->
+            <button style="--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);" onclick="speakContent()"
+                class="size1-5rem bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded ml-2">Read
+                Content</button>
+        </div>
     </div>
 
     <!-- Include Leaflet library -->
@@ -60,7 +240,7 @@
         var longitude = parseFloat('{{ longitude }}');
 
         // Ensure the document is ready before accessing elements
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var map = L.map('map').setView([latitude, longitude], 16); // Adjust zoom level if necessary
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
@@ -98,13 +278,85 @@
         function speakContent() {
             var content = '';
             content += document.getElementById('prediction').textContent + '. ';
-            content += document.getElementById('address').textContent + '. ';
-            content += 'Latitude is ' + document.getElementById('latitude').textContent + '. ';
-            content += 'Longitude is ' + document.getElementById('longitude').textContent + '. ';
+            content += document.getElementById('address1').textContent + '. ';
+            content += 'Latitude is ' + document.getElementById('latitude1').textContent + '. ';
+            content += 'Longitude is ' + document.getElementById('longitude1').textContent + '. ';
 
             var utterance = new SpeechSynthesisUtterance(content);
             window.speechSynthesis.speak(utterance);
         }
+
+        function fetchWeather() {
+            var apiKey = '50977b5ae7d4544fa2fabd537b49c328'; // Replace 'YOUR_API_KEY' with your OpenWeather API key
+
+            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data);
+                    document.getElementById('temperature').innerHTML = Math.floor(data.main.temp - 273.15) + "°C"
+                    document.getElementById('description').innerHTML = data.weather[0].main;
+
+                    const timestamp = data.dt; // Timestamp from the API response
+
+                    // Get the current date
+                    const currentDate = new Date();
+
+                    // Define arrays for days and months
+                    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+                    // Get the day, date number, and month
+                    const day = days[currentDate.getDay()]; // Get the day of the week (0-6)
+                    const dateNo = currentDate.getDate(); // Get the date number (1-31)
+                    const month = months[currentDate.getMonth()]; // Get the month (0-11)
+
+                    // Set the text content of the span elements
+                    document.getElementById('day').textContent = day;
+                    document.getElementById('dateNo').textContent = dateNo;
+                    document.getElementById('month').textContent = month;
+
+                    const weatherCondition = data.weather[0].main;
+                    const weatherIconElement = document.getElementById('weatherIcon');
+
+                    switch (weatherCondition) {
+                        case 'Clouds':
+                            weatherIconElement.classList.add('fa-cloud');
+                            break;
+                        case 'Rain':
+                        case 'Drizzle':
+                        case 'Thunderstorm':
+                            weatherIconElement.classList.add('fa-cloud-showers-heavy');
+                            break;
+                        case 'Snow':
+                            weatherIconElement.classList.add('fa-snowflake');
+                            break;
+                        case 'Clear':
+                            weatherIconElement.classList.add('fa-sun');
+                            break;
+                        case 'Wind':
+                            weatherIconElement.classList.add('fa-wind');
+                            break;
+                        default:
+                            // Default to cloudy icon
+                            weatherIconElement.classList.add('fa-cloud');
+                            break;
+                        }
+
+                    // var weatherInfo = document.getElementById('weatherInfo');
+                    // weatherInfo.innerHTML = `
+                    //     <h2>Weather Information</h2>
+                    //     <p>Location: ${data.name}</p>
+                    //     <p>Temperature: ${data.main.temp} Kelvin</p>
+                    //     <p>Description: ${data.weather[0].description}</p>
+                    // `;
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                    // var weatherInfo = document.getElementById('weatherInfo');
+                    // weatherInfo.innerHTML = '<p>Error fetching weather data. Please try again later.</p>';
+                });
+        }
+        fetchWeather();
     </script>
 </body>
 
