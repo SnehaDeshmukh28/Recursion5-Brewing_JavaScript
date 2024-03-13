@@ -67,5 +67,11 @@ def predict():
             except Exception as e:
                 return render_template('error.html')
 
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        # Here you can handle the file upload process
+        return redirect(url_for('predict'))
+
 if __name__ == '__main__':
     app.run(debug=True)
