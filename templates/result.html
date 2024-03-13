@@ -23,9 +23,20 @@
         <div class="mb-4">
             <img src="{{ url_for('static', filename=image_path) }}" alt="Predicted Landmark" class="max-w-full h-auto">
         </div>
-        <p class="mb-2">Address: <span id="address" class="font-semibold">{{ address }}</span></p>
-        <p class="mb-2">Latitude: <span id="latitude" class="font-semibold">{{ latitude }}</span></p>
-        <p class="mb-4">Longitude: <span id="longitude" class="font-semibold">{{ longitude }}</span></p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <div class="bg-white rounded-lg shadow-md p-4">
+                <h2 class="text-lg font-semibold mb-2">Address</h2>
+                <p id="address" class="font-semibold">{{ address }}</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-4">
+                <h2 class="text-lg font-semibold mb-2">Latitude</h2>
+                <p id="latitude" class="font-semibold">{{ latitude }}</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-4">
+                <h2 class="text-lg font-semibold mb-2">Longitude</h2>
+                <p id="longitude" class="font-semibold">{{ longitude }}</p>
+            </div>
+        </div>
         <div class="mb-4">
             <a href="{{ url_for('home') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back to Home</a>
         </div>
