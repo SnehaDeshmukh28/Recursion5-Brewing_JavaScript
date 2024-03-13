@@ -1,111 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Result</title>
-    <!-- Link to Tailwind CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Include Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <!-- Make sure to set a height for the map container in CSS -->
-    <style>
-        #map {
-            height: 400px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-
-<body class="bg-gray-100">
-    <div class="container mx-auto py-8">
-        <h1 class="text-2xl font-semibold mb-4">Predicted Landmark: <span id="prediction" class="font-bold">{{ prediction }}</span></h1>
-        <div class="mb-4">
-            <img src="{{ url_for('static', filename=image_path) }}" alt="Predicted Landmark" class="max-w-full h-auto">
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-            <div class="bg-white rounded-lg shadow-md p-4">
-                <h2 class="text-lg font-semibold mb-2">Address</h2>
-                <p id="address" class="font-semibold">{{ address }}</p>
-            </div>
-            <div class="bg-white rounded-lg shadow-md p-4">
-                <h2 class="text-lg font-semibold mb-2">Latitude</h2>
-                <p id="latitude" class="font-semibold">{{ latitude }}</p>
-            </div>
-            <div class="bg-white rounded-lg shadow-md p-4">
-                <h2 class="text-lg font-semibold mb-2">Longitude</h2>
-                <p id="longitude" class="font-semibold">{{ longitude }}</p>
-            </div>
-        </div>
-        <div class="mb-4">
-            <a href="{{ url_for('home') }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back to Home</a>
-        </div>
-
-        <!-- Button to get directions -->
-        <button onclick="getDirections('{{ latitude }}', '{{ longitude }}')" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Get Directions</button>
-
-        <!-- Button to read content -->
-        <button onclick="speakContent()" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded ml-2">Read Content</button>
-
-        <!-- Map container -->
-        <div id="map" class="mt-8"></div>
+<body>
+    <div class="container">
+        <h1>Predicted Landmark: {{ prediction }}</h1>
+        <img src="{{ url_for('static', filename=image_path) }}" alt="Predicted Landmark">
+        <p>Address: {{ address }}</p>
+        <p>Latitude: {{ latitude }}</p>
+        <p>Longitude: {{ longitude }}</p>
+        <a href="{{ url_for('home') }}">Back to Home</a>
     </div>
-
-    <!-- Include Leaflet library -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
-    <!-- JavaScript for displaying map -->
-    <script>
-        var latitude = parseFloat('{{ latitude }}');
-        var longitude = parseFloat('{{ longitude }}');
-
-        // Ensure the document is ready before accessing elements
-        document.addEventListener('DOMContentLoaded', function() {
-            var map = L.map('map').setView([latitude, longitude], 16); // Adjust zoom level if necessary
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-            }).addTo(map);
-
-            // Add red marker with circle around it
-            var marker = L.marker([latitude, longitude], {
-                icon: redMarker
-            }).addTo(map);
-            var circle = L.circle([latitude, longitude], {
-                color: 'green',
-                fillColor: 'green',
-                fillOpacity: 0.5,
-                radius: 50 // Adjust the radius of the circle as needed
-            }).addTo(map);
-
-            marker.bindPopup('{{ prediction }}').openPopup();
-        });
-
-        // Define custom red marker icon
-        var redMarker = L.icon({
-            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41]
-        });
-
-        function getDirections(latitude, longitude) {
-            // Open Google Maps with directions
-            window.open('https://www.google.com/maps/dir/?api=1&destination=' + latitude + ',' + longitude, '_blank');
-        }
-
-        function speakContent() {
-            var content = '';
-            content += document.getElementById('prediction').textContent + '. ';
-            content += document.getElementById('address').textContent + '. ';
-            content += 'Latitude is ' + document.getElementById('latitude').textContent + '. ';
-            content += 'Longitude is ' + document.getElementById('longitude').textContent + '. ';
-
-            var utterance = new SpeechSynthesisUtterance(content);
-            window.speechSynthesis.speak(utterance);
-        }
-    </script>
 </body>
 
 </html>
