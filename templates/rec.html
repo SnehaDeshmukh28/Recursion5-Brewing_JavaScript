@@ -63,7 +63,7 @@
         fetch(`http://127.0.0.1:5000/geminired?location_name=${locationName}`)
           .then((response) => response.json())
           .then((data) => {
-            responseDiv.innerHTML = data.generated_text; // Use innerHTML to render HTML content
+            responseDiv.innerText = data.generated_text; // Use innerHTML to render HTML content
           })
           .catch((error) => {
             console.error("Error:", error);

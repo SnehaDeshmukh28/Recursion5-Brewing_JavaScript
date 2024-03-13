@@ -1,19 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landmark Recognition and Travel Guide</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        .hidden {
+            display: none;
+        }
+        .size2rem{
+            font-size: 2rem;
+        }
+        .size1-5rem{
+            font-size: 1.5rem;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Landmark Recognition and Travel Guide</h1>
-        <form action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data">
-            <label for="file">Choose your Image:</label>
-            <input type="file" name="file" id="file" accept=".png, .jpg">
-            <button type="submit">Upload</button>
-        </form>
+
+<body class="bg-gray-100">
+
+    <div class="container mx-auto mt-10 px-4 py-6 bg-white shadow-lg rounded-lg">
+        <h1 style="font-size: 4rem;" class="text-5xl font-bold mb-4">Landmark Recognition and Travel Guide</h1>
+        <hr>
+
+        <h1 style="margin-top: 1rem;" class="size2rem title-font text-lg font-medium text-gray-900 mb-3">Your Trips</h1>
+
+
+        <section class="text-gray-600 body-font">
+            <div class="container py-6 mx-auto">
+                <div style="width: 80%;" class="flex flex-wrap -m-4">
+                    <div class="p-4 md:w-1/3">
+                        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                            <img class="lg:h-48 md:h-36 w-full object-cover object-center"
+                                src="https://images.unsplash.com/photo-1431274172761-fca41d930114?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="blog">
+                            <div class="p-6">
+                                
+                                <h1 class="size2rem title-font text-lg font-medium text-gray-900 mb-3">Eiffel Tower</h1>
+                                <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings
+                                    jianbing microdosing tousled waistcoat.</p>
+                                <div class="flex items-center flex-wrap ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:w-1/3">
+                        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                            <img class="lg:h-48 md:h-36 w-full object-cover object-center"
+                                src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="blog">
+                            <div class="p-6">
+                                
+                                <h1 class="size2rem title-font text-lg font-medium text-gray-900 mb-3">Taj Mahal</h1>
+                                <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings
+                                    jianbing microdosing tousled waistcoat.</p>
+                                <div class="flex items-center flex-wrap">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 md:w-1/3">
+                        <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                            <img class="lg:h-48 md:h-36 w-full object-cover object-center"
+                                src="https://images.unsplash.com/photo-1431274172761-fca41d930114?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="blog">
+                            <div class="p-6">
+                                
+                                <h1 class="size2rem title-font text-lg font-medium text-gray-900 mb-3">Eiffel Tower</h1>
+                                <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings
+                                    jianbing microdosing tousled waistcoat.</p>
+                                <div class="flex items-center flex-wrap ">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <h4 style="margin-top: 1rem; font-weight: 700; font-size: 4rem;" class="mb-3">Create a new trip!</h4>
+
+        <div class="flex my-4">
+            <button id="manualBtn" class="size2rem mx-2 px-4 py-2 bg-gray-200 rounded-md">Manual</button>
+            <button id="aiBtn" class="size2rem mx-2 px-4 py-2 bg-gray-200 rounded-md">AI</button>
+        </div>
+
+        <section id="manualTab" class="text-gray-600 body-font">
+            <div class="container px-5 py-6 mx-auto">
+                <div class="flex flex-wrap -m-4">
+                    <!-- Manual trip cards -->
+                    <form style="width: 50%;" class="space-y-4">
+                        <div>
+                            <label for="destination" class="size1-5rem block text-gray-700">Where to go:</label>
+                            <input type="text" id="destination" name="destination"
+                                class="size2rem block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="Enter destination">
+                        </div>
+                        <div>
+                            <label for="people" class="size1-5rem block text-gray-700">How many people:</label>
+                            <input type="number" id="people" name="people"
+                                class="size2rem block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="Enter number of people">
+                        </div>
+                        <div>
+                            <label for="startDate" class="size1-5rem block text-gray-700">Starting Date:</label>
+                            <input type="date" id="startDate" name="startDate"
+                                class="size2rem block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="endDate" class="size1-5rem block text-gray-700">Ending Date:</label>
+                            <input type="date" id="endDate" name="endDate"
+                                class="size2rem block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                min="" onchange="validateEndDate()">
+                            <p id="endDateError" class="text-red-500 hidden">Ending date must be after starting date.</p>
+                        </div>
+                        <button type="submit" style="padding: 10px 40px; font-size: 1.6rem; margin-top: 2rem;"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="aiTab" class="text-gray-600 body-font hidden">
+            <div class="container px-5 py-6 mx-auto">
+                <div class="flex flex-wrap -m-4">
+                    <!-- AI trip cards -->
+                    <form action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data" class="space-y-4">
+                        <label for="file" class="size2rem block text-gray-700">Choose your Image:</label>
+                        <input type="file" name="file" id="file" accept=".png, .jpg"
+                            class="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <button type="submit" style="padding: 10px 40px; font-size: 1.6rem; margin-top: 2rem;"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
     </div>
+
+    <script>
+        document.getElementById('manualBtn').addEventListener('click', function () {
+            document.getElementById('manualTab').classList.remove('hidden');
+            document.getElementById('aiTab').classList.add('hidden');
+        });
+
+        document.getElementById('aiBtn').addEventListener('click', function () {
+            document.getElementById('manualTab').classList.add('hidden');
+            document.getElementById('aiTab').classList.remove('hidden');
+        });
+        function validateEndDate() {
+            const startDateInput = document.getElementById('startDate');
+            const endDateInput = document.getElementById('endDate');
+            const endDateError = document.getElementById('endDateError');
+
+            if (startDateInput.value && endDateInput.value < startDateInput.value) {
+                endDateError.classList.remove('hidden');
+                endDateInput.value = startDateInput.value;
+            } else {
+                endDateError.classList.add('hidden');
+            }
+        }
+    </script>
+
 </body>
+
 </html>

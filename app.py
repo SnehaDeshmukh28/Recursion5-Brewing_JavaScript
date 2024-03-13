@@ -85,6 +85,22 @@ def predict():
             try:
                 address, latitude, longitude = get_map(prediction)
 
+                # Create Folium map
+                m = folium.Map(location=[latitude, longitude], zoom_start=15)
+                folium.Marker([latitude, longitude], popup=prediction).add_to(m)
+                folium.CircleMarker(
+                    location=[latitude, longitude],
+                    radius=50,
+                    popup=prediction,
+                    color='blue',
+                    fill=True,
+                    fill_color='blue'
+                ).add_to(m)
+
+                # Save map to HTML
+                map_path = './static/map.html'
+                m.save(map_path)
+
                 return render_template('result.html', 
                                        prediction=prediction, 
                                        image_path=url_for('static', filename=img_file.filename), 
@@ -121,7 +137,7 @@ def geminirec():
 
     if location_name:
         convo = model.start_chat(history=[])
-        prompt = f"give me the nearby places of {location_name} having distance from {location_name} as DEST and 2 line decription as DES  "
+        prompt = f"give me the nearby places of {location_name} having distance from {location_name} as DEST and 2 line decription as DES"
         convo.send_message(prompt)
         generated_text = convo.last.text
         return jsonify({"generated_text": generated_text})
