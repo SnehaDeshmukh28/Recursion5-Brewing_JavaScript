@@ -71,14 +71,16 @@
       const budget = document.getElementById("budget").value;
       const people = document.getElementById("people").value;
       const days = document.getElementById("days").value;
-
+      function removeAsterisks(text) {
+            return text.replace(/[**|]/g, ''); // Use a regular expression to replace all asterisks globally
+        }
       fetch(
           `http://127.0.0.1:5000/gemini?location_name=${locationName}&budget=${budget}&people=${people}&days=${days}`
         )
         .then((response) => response.json())
         .then((data) => {
           hideLoader();
-          document.getElementById("response").innerText = parseBoldText(
+          document.getElementById("response").innerText = removeAsterisks(
             data.generated_text
           );
         })
