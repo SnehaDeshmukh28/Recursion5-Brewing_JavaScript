@@ -1,31 +1,51 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    
+
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    
-        <script>
-            L_NO_TOUCH = false;
-            L_DISABLE_3D = false;
-        </script>
-    
-    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
-    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+
+    <script>
+        L_NO_TOUCH = false;
+        L_DISABLE_3D = false;
+    </script>
+
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <style>
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
-    
-            <meta name="viewport" content="width=device-width,
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css" />
+
+    <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_6b8bc5a20ec14e863ebe79322745dcd4 {
+                #map_725411af91f5122d4f0f4558172ee849 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -36,19 +56,20 @@
             </style>
         
 </head>
+
 <body>
     
     
-            <div class="folium-map" id="map_6b8bc5a20ec14e863ebe79322745dcd4" ></div>
+            <div class="folium-map" id="map_725411af91f5122d4f0f4558172ee849" ></div>
         
 </body>
 <script>
     
     
-            var map_6b8bc5a20ec14e863ebe79322745dcd4 = L.map(
-                "map_6b8bc5a20ec14e863ebe79322745dcd4",
+            var map_725411af91f5122d4f0f4558172ee849 = L.map(
+                "map_725411af91f5122d4f0f4558172ee849",
                 {
-                    center: [27.1750075, 78.04210126365584],
+                    center: [18.9225901, 72.83433537485362],
                     crs: L.CRS.EPSG3857,
                     zoom: 15,
                     zoomControl: true,
@@ -56,59 +77,60 @@
                 }
             );
 
-            
+
 
         
     
-            var tile_layer_789ce9d36101d1bd3bba0a26db5b51ea = L.tileLayer(
+            var tile_layer_db541974784f7f338d47bef7dc38ca5c = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
             );
         
     
-            tile_layer_789ce9d36101d1bd3bba0a26db5b51ea.addTo(map_6b8bc5a20ec14e863ebe79322745dcd4);
+            tile_layer_db541974784f7f338d47bef7dc38ca5c.addTo(map_725411af91f5122d4f0f4558172ee849);
         
     
-            var marker_839dfa9ffff239fa79138c56df21dd5f = L.marker(
+            var marker_5a51eb8cc73160a4e9188526fce38d9a = L.marker(
                 [27.1750075, 78.04210126365584],
                 {}
-            ).addTo(map_6b8bc5a20ec14e863ebe79322745dcd4);
+            ).addTo(map_725411af91f5122d4f0f4558172ee849);
         
     
-        var popup_658d5d386debf10ba65c96ea06484a12 = L.popup({"maxWidth": "100%"});
+        var popup_eaa347260222cfde6af0007e8dd90708 = L.popup({"maxWidth": "100%"});
 
         
             
-                var html_836a6ea3e982e2db1fed5930a16cb430 = $(`<div id="html_836a6ea3e982e2db1fed5930a16cb430" style="width: 100.0%; height: 100.0%;">Taj Mahal</div>`)[0];
-                popup_658d5d386debf10ba65c96ea06484a12.setContent(html_836a6ea3e982e2db1fed5930a16cb430);
+                var html_1516653818deb654d80e72dcc40a1260 = $(`<div id="html_1516653818deb654d80e72dcc40a1260" style="width: 100.0%; height: 100.0%;">Taj Mahal</div>`)[0];
+                popup_eaa347260222cfde6af0007e8dd90708.setContent(html_1516653818deb654d80e72dcc40a1260);
             
         
 
-        marker_839dfa9ffff239fa79138c56df21dd5f.bindPopup(popup_658d5d386debf10ba65c96ea06484a12)
+        marker_5a51eb8cc73160a4e9188526fce38d9a.bindPopup(popup_eaa347260222cfde6af0007e8dd90708)
         ;
 
         
     
     
-            var circle_marker_203d82bc7edfbe3ee2b3cfea2a7412da = L.circleMarker(
+            var circle_marker_66c249643db92efbeee9f46c3d6d57a9 = L.circleMarker(
                 [27.1750075, 78.04210126365584],
                 {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 50, "stroke": true, "weight": 3}
-            ).addTo(map_6b8bc5a20ec14e863ebe79322745dcd4);
+            ).addTo(map_725411af91f5122d4f0f4558172ee849);
         
     
-        var popup_f4dab5386c105bead72b8bfb4f36cf09 = L.popup({"maxWidth": "100%"});
+        var popup_39f4947e00d0446d5f9f7cab6948a3aa = L.popup({"maxWidth": "100%"});
 
         
             
-                var html_3252357f671f893bd68faa6e9f38db11 = $(`<div id="html_3252357f671f893bd68faa6e9f38db11" style="width: 100.0%; height: 100.0%;">Taj Mahal</div>`)[0];
-                popup_f4dab5386c105bead72b8bfb4f36cf09.setContent(html_3252357f671f893bd68faa6e9f38db11);
+                var html_a70da67a374e3750b69f9416895678aa = $(`<div id="html_a70da67a374e3750b69f9416895678aa" style="width: 100.0%; height: 100.0%;">Taj Mahal</div>`)[0];
+                popup_39f4947e00d0446d5f9f7cab6948a3aa.setContent(html_a70da67a374e3750b69f9416895678aa);
             
         
 
-        circle_marker_203d82bc7edfbe3ee2b3cfea2a7412da.bindPopup(popup_f4dab5386c105bead72b8bfb4f36cf09)
+        circle_marker_66c249643db92efbeee9f46c3d6d57a9.bindPopup(popup_39f4947e00d0446d5f9f7cab6948a3aa)
         ;
 
-        
-    
+
+
 </script>
+
 </html>
