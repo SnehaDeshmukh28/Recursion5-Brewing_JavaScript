@@ -1,51 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Travel Plan Generator</title>
-  <!-- Include Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      display: none; /* Initially hidden */
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    body{
+        width: 80%;
+        margin: 0 auto;
+    }
+    .size2rem{
+      font-size: 2rem;
+    }
+  </style>
 </head>
-<body class="bg-gray-200">
-  <div class="flex flex-col justify-center items-center min-h-screen px-4">
-    <div class="form-container bg-white shadow-md rounded-lg p-6 max-w-md w-full">
-      <h1 class="text-2xl font-semibold mb-4 text-center">Travel Plan Generator</h1>
+
+<body class="bg-gray-100 w-[85%]">
+  <h1 style="font-size: 4rem;" class="text-6xl mt-8 font-bold">Generate Plan</h1>
+  <div class="flex mt-8">
+    <div style="width: 70%;" class="  bg-white p-8 rounded-lg shadow-lg">
       <form id="travelForm" class="space-y-4">
-        <div class="relative rounded-lg overflow-hidden bg-gray-100">
-          <label for="locationName" class="block mb-1">Place Name</label>
-          <input type="text" id="locationName" placeholder="Place Name" required class="input-field">
+        <div>
+          <label for="locationName" class="size2rem block text-sm font-medium text-gray-700 mb-4">Place Name</label>
+          <input style="font-size: 1rem; margin-bottom: 2rem;" type="text" id="locationName" class="mt-1 py-3 px-4 border block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Place Name" required>
         </div>
-        <div class="relative rounded-lg overflow-hidden bg-gray-100">
-          <label for="days" class="block mb-1">Number of Days</label>
-          <input type="number" id="days" placeholder="Number of Days" required class="input-field">
+        <div>
+          <label for="days" class="size2rem block text-sm font-medium text-gray-700 mb-4">Number of Days</label>
+          <input style="font-size: 1rem; margin-bottom: 2rem;"  type="number" id="days" class="mt-1 py-3 px-4 border block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Number of Days" required>
         </div>
-        <div class="relative rounded-lg overflow-hidden bg-gray-100">
-          <label for="budget" class="block mb-1">Budget</label>
-          <input type="number" id="budget" placeholder="Budget" required class="input-field">
+        <div>
+          <label for="budget" class="size2rem block text-sm font-medium text-gray-700 mb-4">Budget</label>
+          <input style="font-size: 1rem; margin-bottom: 2rem;" type="number" id="budget" class="mt-1 py-3 px-4 border block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Budget" required>
         </div>
-        <div class="relative rounded-lg overflow-hidden bg-gray-100">
-          <label for="people" class="block mb-1">Number of People</label>
-          <input type="number" id="people" placeholder="Number of People" required class="input-field">
+        <div>
+          <label for="people" class="size2rem block text-sm font-medium text-gray-700 mb-4">Number of People</label>
+          <input style="font-size: 1rem; margin-bottom: 2rem;" type="number" id="people" class="mt-1 py-3 px-4 border block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Number of People" required>
         </div>
-        <button type="submit" id="generateBtn" class="btn btn-blue w-full rounded-md">Generate Plan</button>
+        <button style="font-size: 1.4rem;
+        width: 30%;" type="submit" id="generateBtn" class="w-full py-2 px-4 mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Generate Plan</button> 
+        
       </form>
-    </div>
-    <div class="loader mt-4 hidden" id="loader"></div>
-    <div class="response-container bg-white shadow-md rounded-lg p-6 max-w-full w-full mt-4 hidden" id="responseContainer">
-      <h2 class="text-xl font-semibold mb-4">Generated Plan</h2>
-      <p id="response" class="text-justify"></p>
-      <button id="readButton" class="btn btn-blue w-full mt-4 rounded-md">Read</button>
+      <div id="loader" class="mt-4 loader"></div>
+      <div class="mt-4 response-container">
+        <p id="response" class="text-gray-800"></p>
+      </div>
     </div>
   </div>
+  
+  <!-- Text-to-speech button -->
+  <button id="textToSpeechBtn" style="display: none; margin-top: 1rem; font-size: 1.3rem;" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Text to Speech</button>
 
-  <!-- Include Tailwind JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
   <script>
     const loader = document.getElementById("loader");
-    const responseContainer = document.getElementById("responseContainer");
 
-    document.getElementById("travelForm").addEventListener("submit", function (e) {
+    document.getElementById("travelForm").addEventListener("submit", function(e) {
       e.preventDefault();
       showLoader();
       generateText(document.getElementById("locationName").value);
@@ -55,40 +79,54 @@
       const budget = document.getElementById("budget").value;
       const people = document.getElementById("people").value;
       const days = document.getElementById("days").value;
-
+      function removeAsterisks(text) {
+            return text.replace(/[**|]/g, ''); // Use a regular expression to replace all asterisks globally
+        }
       fetch(
-        `http://127.0.0.1:5000/gemini?location_name=${locationName}&budget=${budget}&people=${people}&days=${days}`
-      )
+          `http://127.0.0.1:5000/gemini?location_name=${locationName}&budget=${budget}&people=${people}&days=${days}`
+        )
         .then((response) => response.json())
         .then((data) => {
           hideLoader();
-          const sanitizedText = data.generated_text.replace(/\*/g, ''); // Remove asterisks
-          document.getElementById("response").innerText = sanitizedText;
-          responseContainer.classList.remove("hidden");
+          document.getElementById("response").innerText = parseBoldText(
+            data.generated_text
+          );
         })
         .catch((error) => {
           hideLoader();
           console.error("Error:", error);
           document.getElementById("response").innerHTML =
             "Error occurred while generating text.";
-          responseContainer.classList.remove("hidden");
         });
     }
 
+    function parseBoldText(text) {
+      // Example function to parse text and add bold formatting
+      return `<strong>${text}</strong>`;
+    }
+
     function showLoader() {
-      loader.classList.remove("hidden");
+      loader.style.display = "block";
     }
 
     function hideLoader() {
-      loader.classList.add("hidden");
+      loader.style.display = "none";
     }
 
-    // Text-to-speech functionality
-    document.getElementById("readButton").addEventListener("click", function() {
-      var content = document.getElementById("response").innerText;
-      var utterance = new SpeechSynthesisUtterance(content);
-      window.speechSynthesis.speak(utterance);
+    // Attach event listener to the text-to-speech button
+    document.getElementById("textToSpeechBtn").addEventListener("click", function() {
+      const textToSpeak = document.getElementById("response").innerText;
+      speakText(textToSpeak);
     });
+
+    // Function to speak text using the Web Speech API
+    function speakText(text) {
+      const speech = new SpeechSynthesisUtterance();
+      speech.lang = "en-US";
+      speech.text = text;
+      window.speechSynthesis.speak(speech);
+    }
   </script>
 </body>
+
 </html>

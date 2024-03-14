@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Location Generator</title>
+    <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -43,15 +51,14 @@
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Generate Location Text</h1>
-      <label for="locationName">Location Name:</label>
-      <input type="text" id="locationName" placeholder="Enter location name" />
-      <button onclick="generateText()">Generate Text</button>
-      <div id="loader" class="loader"></div>
-      <div id="response"></div>
-    </div>
-
+    <div class="container mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold mb-4">Generate Location Text</h1>
+        <label for="locationName" class="font-bold block mb-2">Location Name:</label>
+        <input type="text" id="locationName" placeholder="Enter location name" class="block w-full rounded-md border-gray-300 shadow-sm mb-4 focus:border-blue-500 focus:ring-blue-500">
+        <button onclick="generateText()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Generate Text</button>
+        <div id="loader" class="loader mt-6"></div>
+        <div id="response" class="mt-4"></div>
+      </div>
     <script>
       function generateText() {
         const locationName = document.getElementById("locationName").value;
@@ -61,22 +68,28 @@
         loader.style.display = "block"; // Show loader
 
         fetch(`http://127.0.0.1:5000/geminired?location_name=${locationName}`)
-          .then((response) => response.json())
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
           .then((data) => {
-            responseDiv.innerText = data.generated_text; // Use innerHTML to render HTML content
+            responseDiv.innerHTML = removeAsterisks(data.generated_text);
           })
           .catch((error) => {
-            console.error("Error:", error);
+            console.error(
+              "There was a problem with the fetch operation:",
+              error
+            );
             responseDiv.innerText = "Error occurred while generating text.";
           })
           .finally(() => {
             loader.style.display = "none"; // Hide loader when response is received
           });
       }
-
-      function parseBoldText(text) {
-        // You can modify this function to parse and format the text as needed
-        return text;
+      function removeAsterisks(text) {
+        return text.replace(/[**|]/g, ""); // Use a regular expression to replace all asterisks globally
       }
     </script>
   </body>
