@@ -1,139 +1,114 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
+    
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-
-    <script>
-        L_NO_TOUCH = false;
-        L_DISABLE_3D = false;
-    </script>
-
-    <style>
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-    <style>
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-        }
-    </style>
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css" />
-
-    <meta name="viewport" content="width=device-width,
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <style>
-        #map_725411af91f5122d4f0f4558172ee849 {
-            position: relative;
-            width: 100.0%;
-            height: 100.0%;
-            left: 0.0%;
-            top: 0.0%;
-        }
-
-        .leaflet-container {
-            font-size: 1rem;
-        }
-    </style>
-
+            <style>
+                #map_d61bdc8fb53fab528f0c9bc9c6c73ecc {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
 </head>
-
 <body>
-
-
-    <div class="folium-map" id="map_725411af91f5122d4f0f4558172ee849"></div>
-
+    
+    
+            <div class="folium-map" id="map_d61bdc8fb53fab528f0c9bc9c6c73ecc" ></div>
+        
 </body>
 <script>
+    
+    
+            var map_d61bdc8fb53fab528f0c9bc9c6c73ecc = L.map(
+                "map_d61bdc8fb53fab528f0c9bc9c6c73ecc",
+                {
+                    center: [51.501839950000004, -0.14058648979892263],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 15,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
 
+            
 
-    var map_725411af91f5122d4f0f4558172ee849 = L.map(
-        "map_725411af91f5122d4f0f4558172ee849",
-        {
-            center: [18.9225901, 72.83433537485362],
-            crs: L.CRS.EPSG3857,
-            zoom: 15,
-            zoomControl: true,
-            preferCanvas: false,
-        }
-    );
+        
+    
+            var tile_layer_02dbe17e0687270015279875403cedd2 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_02dbe17e0687270015279875403cedd2.addTo(map_d61bdc8fb53fab528f0c9bc9c6c73ecc);
+        
+    
+            var marker_7f291ae9d51f3ad3c24fefe0d70483bc = L.marker(
+                [51.501839950000004, -0.14058648979892263],
+                {}
+            ).addTo(map_d61bdc8fb53fab528f0c9bc9c6c73ecc);
+        
+    
+        var popup_6b4cc27d73992f4cbafca944f56e5a11 = L.popup({"maxWidth": "100%"});
 
+        
+            
+                var html_81bb49240e095b01a1f34f7134627115 = $(`<div id="html_81bb49240e095b01a1f34f7134627115" style="width: 100.0%; height: 100.0%;">Victoria Memorial</div>`)[0];
+                popup_6b4cc27d73992f4cbafca944f56e5a11.setContent(html_81bb49240e095b01a1f34f7134627115);
+            
+        
 
-
-
-
-    var tile_layer_db541974784f7f338d47bef7dc38ca5c = L.tileLayer(
-        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-        { "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false }
-    );
-
-
-    tile_layer_db541974784f7f338d47bef7dc38ca5c.addTo(map_725411af91f5122d4f0f4558172ee849);
-
-
-    var marker_5a51eb8cc73160a4e9188526fce38d9a = L.marker(
-        [27.1750075, 78.04210126365584],
-        {}
-    ).addTo(map_725411af91f5122d4f0f4558172ee849);
-
-
-    var popup_eaa347260222cfde6af0007e8dd90708 = L.popup({ "maxWidth": "100%" });
-
-
-
-    var html_1516653818deb654d80e72dcc40a1260 = $(`<div id="html_1516653818deb654d80e72dcc40a1260" style="width: 100.0%; height: 100.0%;">Taj Mahal</div>`)[0];
-    popup_eaa347260222cfde6af0007e8dd90708.setContent(html_1516653818deb654d80e72dcc40a1260);
-
-
-
-    marker_5a51eb8cc73160a4e9188526fce38d9a.bindPopup(popup_eaa347260222cfde6af0007e8dd90708)
+        marker_7f291ae9d51f3ad3c24fefe0d70483bc.bindPopup(popup_6b4cc27d73992f4cbafca944f56e5a11)
         ;
 
+        
+    
+    
+            var circle_marker_fabe508ab327be29dc7c13a6f18a3365 = L.circleMarker(
+                [51.501839950000004, -0.14058648979892263],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 50, "stroke": true, "weight": 3}
+            ).addTo(map_d61bdc8fb53fab528f0c9bc9c6c73ecc);
+        
+    
+        var popup_96e7d64ac51744a10b79bb7a29fa63f8 = L.popup({"maxWidth": "100%"});
 
+        
+            
+                var html_fb18c5a52918e2527a8c290c961d822a = $(`<div id="html_fb18c5a52918e2527a8c290c961d822a" style="width: 100.0%; height: 100.0%;">Victoria Memorial</div>`)[0];
+                popup_96e7d64ac51744a10b79bb7a29fa63f8.setContent(html_fb18c5a52918e2527a8c290c961d822a);
+            
+        
 
-
-    var circle_marker_66c249643db92efbeee9f46c3d6d57a9 = L.circleMarker(
-        [27.1750075, 78.04210126365584],
-        { "bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 50, "stroke": true, "weight": 3 }
-    ).addTo(map_725411af91f5122d4f0f4558172ee849);
-
-
-    var popup_39f4947e00d0446d5f9f7cab6948a3aa = L.popup({ "maxWidth": "100%" });
-
-
-
-    var html_a70da67a374e3750b69f9416895678aa = $(`<div id="html_a70da67a374e3750b69f9416895678aa" style="width: 100.0%; height: 100.0%;">Taj Mahal</div>`)[0];
-    popup_39f4947e00d0446d5f9f7cab6948a3aa.setContent(html_a70da67a374e3750b69f9416895678aa);
-
-
-
-    circle_marker_66c249643db92efbeee9f46c3d6d57a9.bindPopup(popup_39f4947e00d0446d5f9f7cab6948a3aa)
+        circle_marker_fabe508ab327be29dc7c13a6f18a3365.bindPopup(popup_96e7d64ac51744a10b79bb7a29fa63f8)
         ;
 
-
-
+        
+    
 </script>
-
 </html>
