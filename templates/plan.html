@@ -21,13 +21,17 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    body{
+        width: 80%;
+        margin: 0 auto;
+    }
   </style>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 w-[85%]">
   <h1 class="text-center text-6xl mt-8 font-bold">Generate Plan</h1>
   <div class="flex justify-center mt-8">
-    <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
+    <div class="w-full  bg-white p-8 rounded-lg shadow-lg">
       <form id="travelForm" class="space-y-4">
         <div>
           <label for="locationName" class="block text-sm font-medium text-gray-700">Place Name</label>
