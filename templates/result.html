@@ -138,6 +138,43 @@
         .size1-5rem {
             font-size: 1.5rem;
         }
+
+        .model2{
+            z-index: 10000;
+        }
+
+        #geminiLoader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+#geminiLoader.hidden {
+    display: none;
+}
+
+#geminiLoader::after {
+    content: '';
+    width: 600px;
+    height: 600px;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
     </style>
 </head>
 
@@ -178,7 +215,7 @@
         <!-- Map container -->
 
         <div class="grid grid-cols-2">
-            <div id="map" class="mt-8"></div>
+            <div id="map" class="mt-8 -z-10"></div>
 
             <div>
                 <section style="margin-top: 2rem; padding: 0 3rem;"
@@ -232,6 +269,26 @@
                     Content</button>
             </div>
 
+
+            <div id="inputModal" class="fixed model2 inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <label for="budget" class="block mb-2">Budget:</label>
+                    <input type="text" id="budget" class="block w-full px-4 py-2 mb-4 border rounded-lg">
+                    <label for="people" class="block mb-2">Number of People:</label>
+                    <input type="text" id="people" class="block w-full px-4 py-2 mb-4 border rounded-lg">
+                    <label for="days" class="block mb-2">Number of Days:</label>
+                    <input type="text" id="days" class="block w-full px-4 py-2 mb-4 border rounded-lg">
+                    <button onclick="generateText('{{ prediction }}')" class="block w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">Generate plan</button>
+                </div>
+            </div>
+            <div id="geminiLoader" class="loader hidden"></div>
+
+            <div id="response" class="mt-4"></div>
+            <button onclick="showInputModal('{{ prediction }}')" class="block w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 mt-4">Get Plan</button>
+        
+
+
+
         </div>
 
 
@@ -239,6 +296,8 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <!-- JavaScript for displaying map and other functionalities -->
     <script>
+
+
         var latitude = parseFloat("{{ latitude }}");
         var longitude = parseFloat("{{ longitude }}");
 
@@ -357,6 +416,36 @@
                 });
         }
         fetchWeather();
+        function showInputModal(prediction) {
+            document.getElementById('inputModal').classList.remove('hidden');
+        }
+
+        function generateText(prediction) {
+    const budget = document.getElementById("budget").value;
+    const people = document.getElementById("people").value;
+    const days = document.getElementById("days").value;
+
+    // Show loader
+    document.getElementById('geminiLoader').classList.remove('hidden');
+
+    fetch(`http://127.0.0.1:5000/gemini?location_name=${prediction}&budget=${budget}&people=${people}&days=${days}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("response").innerText = data.generated_text;
+            document.getElementById('inputModal').classList.add('hidden');
+
+            // Hide loader after data is fetched
+            document.getElementById('geminiLoader').classList.add('hidden');
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            document.getElementById("response").innerText = "Error occurred while generating text.";
+            document.getElementById('inputModal').classList.add('hidden');
+
+            // Hide loader on error as well
+            document.getElementById('geminiLoader').classList.add('hidden');
+        });
+}
     </script>
 </body>
 </html>
