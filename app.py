@@ -66,6 +66,18 @@ def home():
 def img():
     return render_template('upload.html')
 
+@app.route('/recommend')
+def recommend():
+    return render_template('recommend.html')
+
+@app.route('/hotels')
+def hotel():
+    return render_template('index.html')
+
+@app.route('/sneha')
+def sneha():
+    return render_template('sneha.html')
+
 @app.route('/about')
 def about():
     return render_template('about.html')

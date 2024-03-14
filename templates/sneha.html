@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotels Map</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Custom CSS -->
+  <style>
+    #map {
+      height: 600px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <label for="latitude">Latitude:</label>
+    <input type="text" id="latitude" name="latitude">
+    <label for="longitude">Longitude:</label>
+    <input type="text" id="longitude" name="longitude">
+    <button id="showHotelsButton">Show Hotels</button>
+  </div>
+  <div id="map"></div>
+
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script>
+    // Initialize the map
+    const map = L.map('map').setView([0, 0], 2);
+
+    // Add Tile Layer (using OpenStreetMap)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Function to fetch and render hotels based on provided latitude and longitude
+    async function fetchAndRenderHotels() {
+      const latitude = document.getElementById('latitude').value;
+      const longitude = document.getElementById('longitude').value;
+
+      try {
+        const response = await axios.get(`https://api.example.com/hotels?lat=${latitude}&lon=${longitude}`);
+        const hotels = response.data;
+
+        hotels.forEach(hotel => {
+          L.marker([hotel.latitude, hotel.longitude])
+            .addTo(map)
+            .bindPopup(`<b>${hotel.name}</b><br>${hotel.address}`);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    // Add event listener to the button
+    document.getElementById('showHotelsButton').addEventListener('click', fetchAndRenderHotels);
+
+  </script>
+</body>
+</html>
