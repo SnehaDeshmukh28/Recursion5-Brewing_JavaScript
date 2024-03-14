@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gemini AI Integration Example</title>
+  <script type="importmap">
+    {
+      "imports": {
+        "@google/generative-ai": "https://esm.run/@google/generative-ai"
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Chat with Gemini</h1>
+  <input type="text" id="userQuery" placeholder="Enter your question or prompt" />
+  <button id="askButton">Ask Gemini</button>
+  <p id="response"></p>
+
+  <script>
+    const askButton = document.getElementById("askButton");
+    askButton.addEventListener("click", generateText); // Call generateText on click
+
+    async function generateText() {
+      const API_KEY = "AIzaSyDbUQj2jSe1THDWuFVdGKRCJ7ozrzd1MyA"; // Replace with your actual API key
+      try {
+        const genAI = await import("@google/generative-ai"); // Dynamic import with await
+        const model = await genAI.GoogleGenerativeAI.getGenerativeModel({ model: "gemini-pro" });
+        const userInput = document.getElementById("userQuery").value;
+        const result = await model.generateContent(userInput);
+        const response = await result.response;
+        const text = response.text();
+        document.getElementById("response").textContent = text;
+      } catch (error) {
+        console.error("Error generating text:", error);
+        // Handle errors gracefully, e.g., display an error message to the user
+      }
+    }
+  </script>
+</body>
+</html>
