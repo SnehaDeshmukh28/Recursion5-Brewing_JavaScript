@@ -12,6 +12,7 @@
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
+    
 
     <style>
       .hidden {
@@ -49,7 +50,7 @@
     </style>
   </head>
 
-  <body class="bg-gray-100 p-12 text-center bg-opacity-90">
+  <body id="vanta" class="bg-gray-100 p-12 text-center bg-opacity-90">
     <div
       class="container mx-auto mt-10 px-4 py-6 bg-gray-100 bg-opacity-60 shadow-lg rounded-lg"
     >
@@ -72,7 +73,22 @@
 
    
     </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds2.min.js"></script>
+<script>
+ VANTA.CLOUDS2({
+  el: "#vanta",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: reue,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  scale: 1.00,
+  speed: 5.00,
 
+})
+</script>
+  </script>
     <script>
       document
         .getElementById("manualBtn")
