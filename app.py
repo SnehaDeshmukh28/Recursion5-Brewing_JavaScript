@@ -140,7 +140,7 @@ def geminirec():
 
     if location_name:
         convo = model.start_chat(history=[])
-        prompt = f"give me the nearby places of {location_name} having distance from {location_name} as DEST and 2 line decription as DES"
+        prompt = f"give me the nearby places of {location_name} having distance from {location_name} as DEST and 2 line decription as DES "
         convo.send_message(prompt)
         generated_text = convo.last.text
         return jsonify({"generated_text": generated_text})
