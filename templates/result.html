@@ -1,188 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Result</title>
-    <!-- Link to Tailwind CSS CDN -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <!-- Include Leaflet CSS -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    />
-    <!-- Make sure to set a height for the map container in CSS -->
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-        margin: 0;
-        padding: 0;
-        background-color: #f4f4f4;
-      }
-
-      .container {
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-      }
-
-      h1 {
-        color: #333;
-        text-align: center;
-      }
-
-      #map {
-        height: 400px;
-        margin-top: 20px;
-      }
-
-      /* Modal styles */
-      .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0, 0, 0); /* Fallback color */
-        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-      }
-
-      .modal-content {
-        background-color: #fefefe;
-        margin: 10% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-      }
-
-      .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-      }
-
-      .close:hover,
-      .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-      }
-
-      /* Responsive button styles */
-      .btn {
-        display: inline-block;
-        padding: 10px 20px;
-        margin: 10px 0;
-        border-radius: 5px;
-        cursor: pointer;
-        text-align: center;
-        text-decoration: none;
-        background-color: #007bff; /* Default blue color */
-        color: #fff;
-        border: none;
-      }
-
-      .btn:hover {
-        background-color: #0056b3; /* Darker blue on hover */
-      }
-
-      /* Form input styles */
-      .input-group {
-        margin-bottom: 20px;
-      }
-
-      .input-group label {
-        display: block;
-        margin-bottom: 5px;
-      }
-
-      .input-group input {
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
-      }
-
-      .input-group button {
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        border: none;
-        background-color: #007bff;
-        color: #fff;
-        cursor: pointer;
-      }
-
-      .input-group button:hover {
-        background-color: #0056b3;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Predicted Landmark: {{ prediction }}</h1>
-      <img
-        src="{{ url_for('static', filename=image_path) }}"
-        alt="Predicted Landmark"
-        id="predictedImage"
-      />
-      <p>Address: {{ address }}</p>
-      <p>Latitude: {{ latitude }}</p>
-      <p>Longitude: {{ longitude }}</p>
-      <a href="{{ url_for('home') }}">Back to Home</a>
-
-      <!-- Button to trigger the input modal -->
-      <button onclick="showInputModal('{{ prediction }}')">Get Plan</button>
-
-      <!-- Button to get directions -->
-      <button
-        onclick="getDirections('{{ latitude }}', '{{ longitude }}')"
-        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
-      >
-        Get Directions
-      </button>
-
-      <!-- Button to read content -->
-      <button
-        onclick="speakContent()"
-        class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded ml-2"
-      >
-        Read Content
-      </button>
-
-      <!-- Hidden input modal -->
-      <div id="inputModal" class="modal">
-        <div class="modal-content">
-          <span class="close" onclick="hideInputModal()">&times;</span>
-          <label for="budget">Budget:</label>
-          <input type="text" id="budget" placeholder="Enter budget" />
-          <label for="people">Number of People:</label>
-          <input type="text" id="people" placeholder="Enter number of people" />
-          <label for="days">Number of Days:</label>
-          <input type="text" id="days" placeholder="Enter number of days" />
-          <button onclick="generateText('{{ prediction }}')">
-            Generate Plan
-          </button>
-        </div>
-      </div>
-
-      <!-- Display generated text here -->
-      <p id="response"></p>
-
-      <!-- Map container -->
-      <div id="map"></div>
 
 <head>
     <meta charset="UTF-8">
@@ -206,7 +23,7 @@
 
         .container {
             margin: 20px auto;
-            padding: 20px;
+            padding: 5rem 0;
             border-radius: 5px;
         }
 
@@ -326,9 +143,8 @@
 
 <body class="bg-gray-100">
     <div class="container py-8">
-        <h1 style="font-size: 4rem; margin-top: 1rem;
-        margin-bottom: 3rem;" class="text-2xl font-semibold mb-4">Predicted Landmark: <span id="prediction"
-                class="font-bold">{{ prediction }}</span></h1>
+        <h1 style="font-size: 5rem; margin-bottom: 5rem; text-align: left;" class="text-2xl font-semibold mb-4">Predicted Landmark: <span id="prediction" class="font-bold">{{
+                prediction }}</span></h1>
         <div class="mb-4 grid grid-cols-3 sm:grid-cols-3 gap-4">
             <div class="bg-white rounded-lg shadow-md p-4 items-center">
                 <div style="align-items: center;" class="flex">
@@ -360,280 +176,185 @@
         </div>
 
         <!-- Map container -->
-        <div id="map" class="mt-8"></div>
 
-        <section
-            style="--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow); background-color: rgba(255, 255, 255, var(--tw-bg-opacity)); margin-top: 2rem; padding: 2rem 5rem;"
-            id="weatherInfo" class="rounded-lg grid grid-cols-1 sm:grid-cols-1 gap-4">
+        <div class="grid grid-cols-2">
+            <div id="map" class="mt-8"></div>
+
             <div>
-                <h3 id="description" style="margin: 0; font-size: 2rem;">Sunny</h3>
-            </div>
-            <div style="align-items: center; justify-content: space-between;" class="flex">
-                <div style="display: flex;">
-                    <h3 id="temperature" style="font-size: 7rem;
-                    font-weight: 700;">25°C</h3>
-
-                    <hr style="width: 1px;
-                    background: #00000036;
-                    height: 50%;
-                    margin: 0 5rem;">
-
-                    <div style="    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    font-size: 2rem;
-                    line-height: 1.5;">
-                        <h4><span id="day">Monday</span>, 
-                            <span id="dateNo">4</span>
-                            <span id="month">september  </span>
-                        </h4>
-                        <h4 id="location">{{prediction}}</h4>
+                <section style="margin-top: 2rem; padding: 0 3rem;"
+                    class="rounded-lg grid grid-cols-1 sm:grid-cols-1 gap-4">
+                    <div>
+                        <h3 id="description" style="margin: 0; font-size: 2rem;">Sunny</h3>
                     </div>
-                </div>
-                <div class="faicon">
-                    <i id="weatherIcon" style="font-size: 13rem;" class="fas fa-2x  text-blue-500 mr-2"></i>
-                </div>
+                    <div style="align-items: center; justify-content: space-between;" class="flex">
+                        <div>
+                            <h3 id="temperature" style="font-size: 7rem; font-weight: 700;">25°C</h3>
+                            <hr style="width: 1px;
+                           background: #00000036;
+                           height: 50%;
+                           margin: 0 5rem;">
+
+                            <div style="    display: flex;
+                           flex-direction: column;
+                           justify-content: center;
+                           font-size: 2rem;
+                           line-height: 1.5;">
+                                <h4><span id="day">Monday</span>,
+                                    <span id="dateNo">4</span>
+                                    <span id="month">september </span>
+                                </h4>
+                                <h4 id="location">{{prediction}}</h4>
+                            </div>
+                        </div>
+                        <div class="faicon">
+                            <i id="weatherIcon" style="font-size: 13rem;" class="fas fa-2x  text-blue-500 mr-2"></i>
+                        </div>
+                    </div>
+                </section>
             </div>
-        </section>
 
-        <div style="margin-top: 1rem;">
-            <button  class="size1-5rem text-white font-bold py-2 rounded"><a style="--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow); margin-right: 0.5rem;"
-                    href="{{ url_for('home') }}"
-                    class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back to
-                    Home</a></button>
+            <div>
+                <!-- Button to go back to home -->
+                <button style="margin-top: 1rem;" class="size1-5rem text-white font-bold py-2 rounded">
+                    <a style="margin-right: 0.5rem;" href="{{ url_for('home') }}"
+                        class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back
+                        to
+                        Home</a>
+                </button>
+                <!-- Button to get directions -->
+                <button style="margin-top: 1rem;" onclick="getDirections('{{ latitude }}', '{{ longitude }}')"
+                    class="size1-5rem bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Get
+                    Directions</button>
 
-            <!-- Button to get directions -->
-            <button style="--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);" onclick="getDirections('{{ latitude }}', '{{ longitude }}')"
-                class="size1-5rem bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Get
-                Directions</button>
+                <!-- Button to read content -->
+                <button style="margin-top: 1rem;" onclick="speakContent()"
+                    class="size1-5rem bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded ml-2">Read
+                    Content</button>
+            </div>
 
-            <!-- Button to read content -->
-            <button style="--tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);" onclick="speakContent()"
-                class="size1-5rem bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded ml-2">Read
-                Content</button>
         </div>
     </div>
+
 
     <!-- Include Leaflet library -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <!-- JavaScript for displaying map and other functionalities -->
     <script>
-      var latitude = parseFloat("{{ latitude }}");
-      var longitude = parseFloat("{{ longitude }}");
-
-      // Ensure the document is ready before accessing elements
-      document.addEventListener("DOMContentLoaded", function () {
-        var map = L.map("map").setView([latitude, longitude], 16); // Adjust zoom level if necessary
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          maxZoom: 19,
-        }).addTo(map);
-
-        // Add red marker with circle around it
-        var marker = L.marker([latitude, longitude], {
-          icon: redMarker,
-        }).addTo(map);
-        var circle = L.circle([latitude, longitude], {
-          color: "green",
-          fillColor: "green",
-          fillOpacity: 0.5,
-          radius: 50, // Adjust the radius of the circle as needed
-        }).addTo(map);
-
-        marker.bindPopup("{{ prediction }}").openPopup();
-      });
-
-      // Define custom red marker icon
-      var redMarker = L.icon({
-        iconUrl:
-          "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png",
-        shadowUrl:
-          "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41],
-      });
-
-      function getDirections(latitude, longitude) {
-        // Open Google Maps with directions
-        window.open(
-          "https://www.google.com/maps/dir/?api=1&destination=" +
-            latitude +
-            "," +
-            longitude,
-          "_blank"
-        );
-      }
-
-      function speakContent() {
-        var content = "";
-        content += "Predicted Landmark: " + "{{ prediction }}" + ". ";
-        content += "Address: " + "{{ address }}" + ". ";
-        content += "Latitude: " + "{{ latitude }}" + ". ";
-        content += "Longitude: " + "{{ longitude }}" + ". ";
-
-        var utterance = new SpeechSynthesisUtterance(content);
-        window.speechSynthesis.speak(utterance);
-      }
-
-      function parseBoldText(text) {
-        const cleanedText = text.replace("*", "");
-        return cleanedText;
-      }
-
-      function showInputModal(locationName) {
-        document.getElementById("inputModal").style.display = "block";
-      }
-
-      function hideInputModal() {
-        document.getElementById("inputModal").style.display = "none";
-      }
-
-      function generateText(locationName) {
-        const budget = document.getElementById("budget").value;
-        const people = document.getElementById("people").value;
-        const days = document.getElementById("days").value;
-
-        fetch(
-          `http://127.0.0.1:5000/gemini?location_name=${locationName}&budget=${budget}&people=${people}&days=${days}`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            document.getElementById("response").innerText = parseBoldText(
-              data.generated_text
-            );
-            hideInputModal();
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            document.getElementById("response").innerText =
-              "Error occurred while generating text.";
-            hideInputModal();
-          });
-      }
-    </script>
-  </body>
-=======
-    <!-- JavaScript for displaying map -->
-    <script>
-        var latitude = parseFloat('{{ latitude }}');
-        var longitude = parseFloat('{{ longitude }}');
+        var latitude = parseFloat("{{ latitude }}");
+        var longitude = parseFloat("{{ longitude }}");
 
         // Ensure the document is ready before accessing elements
-        document.addEventListener('DOMContentLoaded', function () {
-            var map = L.map('map').setView([latitude, longitude], 16); // Adjust zoom level if necessary
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        document.addEventListener("DOMContentLoaded", function () {
+            var map = L.map("map").setView([latitude, longitude], 16); // Adjust zoom level if necessary
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 maxZoom: 19,
             }).addTo(map);
 
             // Add red marker with circle around it
             var marker = L.marker([latitude, longitude], {
-                icon: redMarker
+                icon: redMarker,
             }).addTo(map);
             var circle = L.circle([latitude, longitude], {
-                color: 'green',
-                fillColor: 'green',
+                color: "green",
+                fillColor: "green",
                 fillOpacity: 0.5,
-                radius: 50 // Adjust the radius of the circle as needed
+                radius: 50, // Adjust the radius of the circle as needed
             }).addTo(map);
 
-            marker.bindPopup('{{ prediction }}').openPopup();
+            marker.bindPopup("{{ prediction }}").openPopup();
         });
 
         // Define custom red marker icon
         var redMarker = L.icon({
-            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+            iconUrl:
+                "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png",
+            shadowUrl:
+                "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
-            shadowSize: [41, 41]
+            shadowSize: [41, 41],
         });
 
         function getDirections(latitude, longitude) {
             // Open Google Maps with directions
-            window.open('https://www.google.com/maps/dir/?api=1&destination=' + latitude + ',' + longitude, '_blank');
+            window.open(
+                "https://www.google.com/maps/dir/?api=1&destination=" +
+                latitude +
+                "," +
+                longitude,
+                "_blank"
+            );
         }
 
         function speakContent() {
-            var content = '';
-            content += document.getElementById('prediction').textContent + '. ';
-            content += document.getElementById('address1').textContent + '. ';
-            content += 'Latitude is ' + document.getElementById('latitude1').textContent + '. ';
-            content += 'Longitude is ' + document.getElementById('longitude1').textContent + '. ';
+            var content = "";
+            content += "Predicted Landmark: " + "{{ prediction }}" + ". ";
+            content += "Address: " + "{{ address }}" + ". ";
+            content += "Latitude: " + "{{ latitude }}" + ". ";
+            content += "Longitude: " + "{{ longitude }}" + ". ";
 
             var utterance = new SpeechSynthesisUtterance(content);
             window.speechSynthesis.speak(utterance);
         }
 
         function fetchWeather() {
-            var apiKey = '50977b5ae7d4544fa2fabd537b49c328'; // Replace 'YOUR_API_KEY' with your OpenWeather API key
+            var apiKey = "50977b5ae7d4544fa2fabd537b49c328"; // Replace 'YOUR_API_KEY' with your OpenWeather API key
 
-            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`)
-                .then(response => response.json())
-                .then(data => {
-                    // console.log(data);
-                    document.getElementById('temperature').innerHTML = Math.floor(data.main.temp - 273.15) + "°C"
-                    document.getElementById('description').innerHTML = data.weather[0].main;
-
-                    const timestamp = data.dt; // Timestamp from the API response
-
-                    // Get the current date
-                    const currentDate = new Date();
-
-                    // Define arrays for days and months
-                    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-                    // Get the day, date number, and month
-                    const day = days[currentDate.getDay()]; // Get the day of the week (0-6)
-                    const dateNo = currentDate.getDate(); // Get the date number (1-31)
-                    const month = months[currentDate.getMonth()]; // Get the month (0-11)
-
-                    // Set the text content of the span elements
-                    document.getElementById('day').textContent = day;
-                    document.getElementById('dateNo').textContent = dateNo;
-                    document.getElementById('month').textContent = month;
-
-                    const weatherCondition = data.weather[0].main;
-                    const weatherIconElement = document.getElementById('weatherIcon');
-
+            fetch(
+                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
+            )
+                .then((response) => response.json())
+                .then((data) => {
+                    document.getElementById("temperature").innerHTML =
+                        Math.floor(data.main.temp - 273.15) + "°C";
+                    document.getElementById("description").innerHTML =
+                        data.weather[0].main;
+                    // Update weather icon based on weather condition
+                    var weatherIcon = document.getElementById("weatherIcon");
+                    var weatherCondition = data.weather[0].main;
                     switch (weatherCondition) {
-                        case 'Clouds':
-                            weatherIconElement.classList.add('fa-cloud');
+                        case "Clouds":
+                            weatherIcon.classList.add("fa-cloud");
                             break;
-                        case 'Rain':
-                        case 'Drizzle':
-                        case 'Thunderstorm':
-                            weatherIconElement.classList.add('fa-cloud-showers-heavy');
+                        case "Rain":
+                        case "Drizzle":
+                        case "Thunderstorm":
+                            weatherIcon.classList.add("fa-cloud-showers-heavy");
                             break;
-                        case 'Snow':
-                            weatherIconElement.classList.add('fa-snowflake');
+                        case "Snow":
+                            weatherIcon.classList.add("fa-snowflake");
                             break;
-                        case 'Clear':
-                            weatherIconElement.classList.add('fa-sun');
+                        case "Clear":
+                            weatherIcon.classList.add("fa-sun");
                             break;
-                        case 'Wind':
-                            weatherIconElement.classList.add('fa-wind');
+                        case "Wind":
+                            weatherIcon.classList.add("fa-wind");
                             break;
                         default:
                             // Default to cloudy icon
-                            weatherIconElement.classList.add('fa-cloud');
+                            weatherIcon.classList.add("fa-cloud");
                             break;
-                        }
+                    }
 
-                    // var weatherInfo = document.getElementById('weatherInfo');
-                    // weatherInfo.innerHTML = `
-                    //     <h2>Weather Information</h2>
-                    //     <p>Location: ${data.name}</p>
-                    //     <p>Temperature: ${data.main.temp} Kelvin</p>
-                    //     <p>Description: ${data.weather[0].description}</p>
-                    // `;
+                    // Update day, date, and month
+                    const currentDate = new Date();
+                    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    const day = days[currentDate.getDay()];
+                    const date = currentDate.getDate();
+                    const month = months[currentDate.getMonth()];
+
+                    document.getElementById("day").textContent = day;
+                    document.getElementById("dateNo").textContent = date;
+                    document.getElementById("month").textContent = month;
+
+                    // Update location
+                    document.getElementById("location").textContent = "{{ prediction }}";
                 })
-                .catch(error => {
-                    console.error('Error fetching weather data:', error);
-                    // var weatherInfo = document.getElementById('weatherInfo');
-                    // weatherInfo.innerHTML = '<p>Error fetching weather data. Please try again later.</p>';
+                .catch((error) => {
+                    console.error("Error fetching weather data:", error);
+                    document.getElementById("weatherInfo").textContent = "Error fetching weather data. Please try again later.";
                 });
         }
         fetchWeather();
